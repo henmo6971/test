@@ -1,0 +1,52 @@
+
+To make sure you get acccess to Bastion:
+(linux based) OS make it easier,  make sure you have created a public and private key.
+ssh-keygen and enter for defaults most likely  would create in ~/.ssh/id_ed25519 and ~/.ssh/id_ed25519.pub
+
+Update keypair.tf file with the path for your public key.
+public_key = file("~/.ssh/id_ed25519.pub")
+
+**if above completed, ready to run terraform.**
+
+you are ready to run terraform init the terraform plan and apply.
+Code was tested and successfully met the requirements of challenge, well in my opinion.
+
+Terraform apply will prompt you for the IP to allow access to bastion.
+you can use 0.0.0.0/0 or your IP x.x.x.x/32
+once terraform creates all resources:
+
+ssh ec2-user@<Public IP BASTION ec2>
+
+**Some extra to check httpd config**
+You could also access via ssh to your ec2 instances in the ASG, not recommended, but i did for troubleshooting purposes.
+cp from your terminal ~/.ssh/id_ed25519 to the bastion and name <file.key> and set chmod 400 to the new file.
+
+then to ssh to private instances:
+ssh -i file.key ec2-user@IP
+
+####################
+Test Load balancer:
+####################
+Grab dns info from the new load balancer created. (yours will be different.
+example:
+internal-testti20261010150500518500000006-1964878781.us-east-1.elb.amazonaws.com
+once you ssh to bastion you can test it as follows:
+
+[ec2-user@ip-10-1-1-59 ~]$ wget -qO- http://internal-testti20261010150500518500000006-1964878781.us-east-1.elb.amazonaws.com
+
+Output:
+  <body>
+    <h1>Amazon Linux 2023</h1>
+    <p>Instance private IP: 10.1.2.237</p>
+  </body>
+
+if you run the command again you should receive a different IP
+  <body>
+    <h1>Amazon Linux 2023</h1>
+    <p>Instance private IP: 10.1.2.222</p>
+  </body>
+
+####Congrats is working ALB routing traffic to ec2 instances which are in ASG. #######
+
+
+
