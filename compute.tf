@@ -36,7 +36,7 @@ resource "aws_launch_template" "application" {
   name_prefix   = "${var.name_prefix}-application-"
   image_id      = data.aws_ssm_parameter.amazon_linux_2023.value
   instance_type = "t3.micro"
-
+  key_name = aws_key_pair.tester.key_name
   vpc_security_group_ids = [aws_security_group.application.id]
 
   metadata_options {

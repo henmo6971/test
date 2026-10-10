@@ -58,3 +58,14 @@ variable "backend_subnet_cidr" {
     error_message = "backend_subnet_cidr must be a valid /24 IPv4 CIDR block."
   }
 }
+
+variable "bastion_allowed_ssh_cidr" {
+  description = "CIDR block allowed to SSH into the bastion"
+  type        = string
+}
+
+variable "bastion_ssh_public_key" {
+  description = "Public key installed on the bastion for admin SSH access."
+  type        = string
+  sensitive   = true
+}
