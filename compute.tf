@@ -15,6 +15,14 @@ resource "aws_security_group" "application" {
     cidr_blocks = [var.vpc_cidr]
   }
 
+  ingress {
+    description     = "SSH from the bastion"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bastion.id]
+  }
+
   egress {
     description = "Allow outbound traffic for package installation and updates"
     from_port   = 0
