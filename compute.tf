@@ -116,7 +116,7 @@ resource "aws_autoscaling_group" "application" {
   desired_capacity   = 2
   vpc_zone_identifier = [aws_subnet.this["application"].id]
   health_check_type  = "EC2"
-
+  target_group_arns = [aws_lb_target_group.application.arn]
   launch_template {
     id      = aws_launch_template.application.id
     version = "$Latest"
