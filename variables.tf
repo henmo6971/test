@@ -64,8 +64,3 @@ variable "bastion_allowed_ssh_cidr" {
   type        = string
 }
 
-variable "bastion_ssh_public_key" {
-  description = "Public key installed on the bastion for admin SSH access."
-  type        = string
-  sensitive   = true
-}
