@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "name_prefix" {
   description = "Prefix applied to resource Name tags."
   type        = string
-  default     = "three-tier"
+  default     = "test-tiers"
 
   validation {
     condition     = length(trimspace(var.name_prefix)) > 0
